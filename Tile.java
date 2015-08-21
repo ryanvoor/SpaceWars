@@ -13,22 +13,44 @@ public class Tile {
   private Unit secondaryOccupant;
 
   /**
-  * Constructor that takes in a single parameter and initializes the occupant
-  * field to be null by default
-  * @param terrain the type of terrain for the tile
+  * constructor that has no parameters and uses all default values
+  * terrain: plains, primary and secondary occupants: null
   */
-  public Tile(Terrain terrain) {
-    this(terrain, null);
+  public Tile() {
+    this(new Plains(), null, null);
   }
 
   /**
-  * Constructor that takes in 2 parameters
+  * Constructor that takes in a single parameter, the terrain, and sets the
+  * primary and secondary occupant fields to be null by default
+  * @param terrain the type of terrain for the tile
+  */
+  public Tile(Terrain terrain) {
+    this(terrain, null, null);
+  }
+
+  /**
+  * Constructor that takes in 2 parameters, the terrain and the primary occupant
+  * sets the secondaryOccupant field to be null
   * @param terrain the type of terrain for the tile
   * @param occupant the type of unit occupying the tile
   */
-  public Tile(Terrain terrain, Unit occupant) {
+  public Tile(Terrain terrain, Unit primaryOccupant) {
+    this(terrain, primaryOccupant, null);
+  }
+
+  /**
+  * Constructor that takes in all 3 parameters
+  * @param terrain the type of terrain for the tile
+  * @param primaryOccupant the type of unit occupying the tile that moved here
+  * before the secondaryOccupant
+  * @param secondaryOccupant the type of unit occupying the tile that moved here
+  * after the primaryOccupant
+  */
+  public Tile(Terrain terrain, Unit primaryOccupant, Unit secondaryOccupant) {
     this.terrain = terrain;
-    this.occupant = occupant;
+    this.primaryOccupant = primaryOccupant;
+    this.secondaryOccupant = secondaryOccupant;
   }
 
   /**
@@ -45,17 +67,25 @@ public class Tile {
   * @return Terrain the previous Terrain of the tile
   */
   public Terrain setTerrain(Terrain terrain) {
-    previousTerrain = this.terrain;
-    this.terrain = terrain
+    Terrain previousTerrain = this.terrain;
+    this.terrain = terrain;
     return previousTerrain;
   }
 
   /**
-  * getter for the occupant of this tile
-  * @return Unit the occupant of this tile
+  * getter for the primary occupant of this tile
+  * @return Unit the primary occupant of this tile
   */
-  public Unit getOccupant() {
-    return this.occupant;
+  public Unit getPrimaryOccupant() {
+    return this.primaryOccupant;
+  }
+
+  /**
+  * getter for the secondary occupant of this tile
+  * @return Unit the secondary occupant of this tile
+  */
+  public Unit getSecondaryOccupant() {
+    return this.secondaryOccupant;
   }
 
   /**
@@ -64,9 +94,9 @@ public class Tile {
   * @return Boolean whether the newOccupant was successfully added
   */
   public Boolean addOccupant(Unit newOccupant) {
-    if primaryOccupant != null {
+    if (primaryOccupant != null) {
       this.primaryOccupant = newOccupant;
-    } else if secondaryOccupant != null {
+    } else if (secondaryOccupant != null) {
       this.secondaryOccupant = newOccupant;
     } else {
       return false;
@@ -81,12 +111,12 @@ public class Tile {
   * @throws NoOccupantException if the given unit was not occupying this tile
   */
   public Unit removeOccupant(Unit occupantToBeRemoved) throws NoOccupantException {
-    if occupantToBeRemoved.equals(this.secondaryOccupant) {
-      oldSecondaryOccupant = this.secondaryOccupant;
+    if (occupantToBeRemoved.equals(this.secondaryOccupant)) {
+      Unit oldSecondaryOccupant = this.secondaryOccupant;
       this.secondaryOccupant = null;
       return oldSecondaryOccupant;
-    } else if occupantToBeRemoved.equals(this.primaryOccupant) {
-      oldPrimaryOccupant = this.primaryOccupant;
+    } else if (occupantToBeRemoved.equals(this.primaryOccupant)) {
+      Unit oldPrimaryOccupant = this.primaryOccupant;
       this.primaryOccupant = null;
       return oldPrimaryOccupant;
     } else {
@@ -99,7 +129,7 @@ public class Tile {
   * @return Boolean whether this tile is contested
   */
   public Boolean isContested() {
-    return primaryOccupant != null && secondaryOccupant != null;
+    return (primaryOccupant != null && secondaryOccupant != null);
   }
 
 }

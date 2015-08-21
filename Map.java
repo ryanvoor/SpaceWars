@@ -11,7 +11,7 @@ public class Map {
   * @param height, number of tiles vertically for this map
   * @param width, number of tiles horizontally for this map
   */
-  public map(int height, int width) {
+  public Map(int height, int width) {
     tiles = new Tile[height][width];
   }
 
