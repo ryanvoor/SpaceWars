@@ -4,7 +4,11 @@
 * @version 1.0
 */
 public class Map {
-  private Tile[][] tiles;
+  private TileContainer[][] tiles;
+
+  /**
+  todo: implement iterable for this object
+  */
 
   /**
   * public constructor for the Map class
@@ -12,7 +16,23 @@ public class Map {
   * @param height, number of tiles vertically for this map
   */
   public Map(int width, int height) {
-    tiles = new Tile[width][height];
+    tiles = new TileContainer[width][height];
+  }
+
+  // probably need to outsource this to a static class specifically for map creation
+  // lots of temporary stuff in this method
+  /**
+  * static method that creates test map 1
+  * @return Map test map 1
+  */
+  public static Map getTestMap1() {
+    Map testMap1 = new Map(15, 15);
+    for (int i = 0; i < testMap1.getWidth(); i++) {
+      for (int j = 0; j < testMap1.getHeight(); j++) {
+        testMap1.setTile(i, j, new Tile(null));
+      }
+    }
+    return testMap1;
   }
 
   /**
@@ -20,7 +40,7 @@ public class Map {
   * @param width the width of the tile
   * @param height the height of the tile
   */
-  public Tile getTile(int width, int height) {
+  public TileContainer getTile(int width, int height) {
     return tiles[width][height];
   }
 
@@ -32,8 +52,13 @@ public class Map {
   * @return Tile the previous tile at this location
   */
   public Tile setTile(int width, int height, Tile tile) {
-    Tile oldTile = this.tiles[width][height];
-    this.tiles[width][height] = tile;
+    Tile oldTile;
+    if (this.tiles[width][height] != null) {
+      oldTile = this.tiles[width][height].getTile();
+    } else {
+      oldTile = null;
+    }
+    this.tiles[width][height] = new TileContainer(tile);
     return oldTile;
   }
 
