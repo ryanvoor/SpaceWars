@@ -13,6 +13,15 @@ public class TileContainer extends ImageView {
   Tile tile;
 
   /**
+  * constructor that takes in only a tile
+  * @param tile the tile to be contained by this TileContainer
+  */
+  public TileContainer(Tile tile) {
+    super();
+    this.tile = tile;
+  }
+
+  /**
   * constructor for the TileContainer class, takes in 2 parameters
   * @param image the image for this tile
   * @param tile the tile for this tile container
