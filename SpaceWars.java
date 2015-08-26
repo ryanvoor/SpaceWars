@@ -37,7 +37,7 @@ public class SpaceWars extends Application {
     // not actually using this at this point, just a proof of concept thing I guess
     String mapSelection = getMapSelection();
 
-    currentMap = Map.getTestMap1();
+    currentMap = MapCreator.testMap1();
     Parent container = (Parent) getGrid(currentMap);
 
     Scene scene = new Scene(container);
