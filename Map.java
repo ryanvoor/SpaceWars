@@ -7,10 +7,6 @@ public class Map {
   private TileContainer[][] tiles;
 
   /**
-  todo: implement iterable for this object
-  */
-
-  /**
   * public constructor for the Map class
   * @param width, number of tiles horizontally for this map
   * @param height, number of tiles vertically for this map
