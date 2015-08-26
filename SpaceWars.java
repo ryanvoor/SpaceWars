@@ -23,10 +23,10 @@ public class SpaceWars extends Application {
 
   String TITLE = "Space Wars";
 
-  int WIDTH_OF_TILE = 100;
-  int HEIGHT_OF_TILE = 100;
-  String PLACEHOLDER_IMAGE_LOCAL_URL = "/images/advance_wars_mech.png";
-  Map currentMap;
+  private final int WIDTH_OF_TILE = 100;
+  private final int HEIGHT_OF_TILE = 100;
+  private final String PLACEHOLDER_IMAGE_LOCAL_URL = "/images/advance_wars_mech.png";
+  private Map currentMap;
 
   /**
   * Primary controller method for the application
