@@ -13,7 +13,7 @@ public final class MapCreator {
     Map testMap1 = new Map(15, 15);
     for (int i = 0; i < testMap1.getWidth(); i++) {
       for (int j = 0; j < testMap1.getHeight(); j++) {
-        testMap1.setTile(i, j, new Tile(null));
+        testMap1.setTile(i, j, new TileContainer(new Tile(null)));
       }
     }
     return testMap1;

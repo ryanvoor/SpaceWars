@@ -16,6 +16,14 @@ public class Map {
   }
 
   /**
+  * getter for the matrix of TileContainers that represents this Map
+  * @return TileContainer[][] the matrix of tiles that represents this Map
+  */
+  public TileContainer[][] getTiles() {
+    return tiles;
+  }
+
+  /**
   * getter for each tile in the matrix of tiles
   * @param width the width of the tile
   * @param height the height of the tile
@@ -29,16 +37,16 @@ public class Map {
   * @param width the horizontal coordinate (starts in top-left)
   * @param height the vertical coordinate (start in top-left)
   * @param tile the tile to be put at this location in this map
-  * @return Tile the previous tile at this location
+  * @return TileContainer the previous tile at this location
   */
-  public Tile setTile(int width, int height, Tile tile) {
-    Tile oldTile;
+  public TileContainer setTile(int width, int height, TileContainer tile) {
+    TileContainer oldTile;
     if (this.tiles[width][height] != null) {
-      oldTile = this.tiles[width][height].getTile();
+      oldTile = this.tiles[width][height];
     } else {
       oldTile = null;
     }
-    this.tiles[width][height] = new TileContainer(tile);
+    this.tiles[width][height] = tile;
     return oldTile;
   }
 
