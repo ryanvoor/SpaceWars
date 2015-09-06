@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 
 public class TileContainer extends ImageView {
 
-  Tile tile;
+  private Tile tile;
 
   /**
   * constructor that takes in only a tile
