@@ -16,7 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Button;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 
 public class SpaceWars extends Application {
@@ -28,6 +28,8 @@ public class SpaceWars extends Application {
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_2 = "/images/advance_wars_variety_of_units.jpg";
   private Map currentMap;
+  private Canvas canvas;
+  private GraphicsContext gc;
 
   /**
   * Primary controller method for the application
@@ -39,35 +41,35 @@ public class SpaceWars extends Application {
     String mapSelection = getMapSelection();
 
     currentMap = MapCreator.testMap1();
-    Parent container = (Parent) getGrid(currentMap);
+    canvas = new Canvas(WIDTH_OF_TILE * currentMap.getWidth(), HEIGHT_OF_TILE * currentMap.getHeight());
+    gc = canvas.getGraphicsContext2D();
+    writeCanvas();
 
+    Pane container = new Pane();
+    container.getChildren().add(canvas);
     Scene scene = new Scene(container);
-
     showWindow(stage, scene);
-
   }
 
   /**
-  * method that creates a Node to be put into the stage of the application
-  * @return Node the container of the grid of Tiles of the Map to be played on
+  * writes the current map to the canvas to be displayed
   */
-  private Node getGrid(Map map) {
-    HBox container = new HBox();
-    for (int i = 0; i < map.getWidth(); i++) {
-      VBox column = new VBox();
-      for (int j = 0; j < map.getHeight(); j++) {
+  private void writeCanvas() {
+    int currentPixelWidth = 0;
+    int currentPixelHeight = 0;
+    for (int i = 0; i < currentMap.getWidth(); i++) {
+      for (int j = 0; j < currentMap.getHeight(); j++) {
 
-        TileContainer tileContainer = new TileContainer(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_1), map.getTile(i, j).getTile());
+        TileContainer tileContainer = new TileContainer(
+          new Image(PLACEHOLDER_IMAGE_LOCAL_URL_1, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true),
+            currentMap.getTile(i, j).getTile());
 
-        tileContainer.setOnMouseClicked(getTileMouseClickedEvent());
-        tileContainer.setFitWidth(WIDTH_OF_TILE);
-        tileContainer.setFitHeight(HEIGHT_OF_TILE);
-
-        column.getChildren().add(tileContainer);
+        gc.drawImage(tileContainer.getImage(), currentPixelWidth, currentPixelHeight);
+        currentPixelHeight += HEIGHT_OF_TILE;
       }
-      container.getChildren().add(column);
+    currentPixelWidth += WIDTH_OF_TILE;
+    currentPixelHeight = 0;
     }
-    return container;
   }
 
   /**
