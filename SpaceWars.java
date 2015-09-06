@@ -25,7 +25,8 @@ public class SpaceWars extends Application {
 
   private final int WIDTH_OF_TILE = 100;
   private final int HEIGHT_OF_TILE = 100;
-  private final String PLACEHOLDER_IMAGE_LOCAL_URL = "/images/advance_wars_mech.png";
+  private final String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
+  private final String PLACEHOLDER_IMAGE_LOCAL_URL_2 = "/images/advance_wars_variety_of_units.jpg";
   private Map currentMap;
 
   /**
@@ -43,6 +44,7 @@ public class SpaceWars extends Application {
     Scene scene = new Scene(container);
 
     showWindow(stage, scene);
+
   }
 
   /**
@@ -55,7 +57,7 @@ public class SpaceWars extends Application {
       VBox column = new VBox();
       for (int j = 0; j < map.getHeight(); j++) {
 
-        TileContainer tileContainer = new TileContainer(new Image(PLACEHOLDER_IMAGE_LOCAL_URL), map.getTile(i, j).getTile());
+        TileContainer tileContainer = new TileContainer(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_1), map.getTile(i, j).getTile());
 
         tileContainer.setOnMouseClicked(getTileMouseClickedEvent());
         tileContainer.setFitWidth(WIDTH_OF_TILE);
