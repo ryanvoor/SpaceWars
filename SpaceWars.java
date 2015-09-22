@@ -18,10 +18,16 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
+import javafx.animation.AnimationTimer;
+// import javafx.
 
 public class SpaceWars extends Application {
 
   String TITLE = "Space Wars";
+
+  /**
+    need to set up a variable that calculates the size of the window
+  */
 
   private final int WIDTH_OF_TILE = 100;
   private final int HEIGHT_OF_TILE = 100;
@@ -43,26 +49,64 @@ public class SpaceWars extends Application {
     currentMap = MapCreator.testMap1();
     canvas = new Canvas(WIDTH_OF_TILE * currentMap.getWidth(), HEIGHT_OF_TILE * currentMap.getHeight());
     gc = canvas.getGraphicsContext2D();
-    writeCanvas();
+    // writeCanvas();
 
     Pane container = new Pane();
     container.getChildren().add(canvas);
     Scene scene = new Scene(container);
+
+    final long startNanoTime = System.nanoTime();
+
+    new AnimationTimer()
+    {
+      public void handle(long currentNanoTime)
+      {
+        double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+
+        double x = 232 + 128 * Math.cos(t);
+        double y = 232 + 128 * Math.sin(t);
+
+        // should use the new variable that calculates that size of the window
+        gc.clearRect(0, 0, WIDTH_OF_TILE * currentMap.getWidth(), HEIGHT_OF_TILE * currentMap.getHeight());
+        writeCanvas(t);
+
+        // TileContainer[][] tiles = currentMap.getTiles();
+        // for (TileContainer[] array: tiles) {
+        //   for (TileContainer tile: array) {
+        //     gc.drawImage(image.getFrame(t), posX, posY, scaleX * width, scaleY * height);
+
+        //   }
+        // }
+
+
+        /**
+          how to translate this into the drawing the current frame of the image for
+        */
+
+      }
+    }.start();
+
     showWindow(stage, scene);
   }
 
   /**
   * writes the current map to the canvas to be displayed
   */
-  private void writeCanvas() {
+  private void writeCanvas(double time) {
     int currentPixelWidth = 0;
     int currentPixelHeight = 0;
     for (int i = 0; i < currentMap.getWidth(); i++) {
       for (int j = 0; j < currentMap.getHeight(); j++) {
 
+        AnimatedImage image = new AnimatedImage();
+        Image[] images = new Image[2];
+        images[0] = new Image(PLACEHOLDER_IMAGE_LOCAL_URL_1, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true);
+        images[1] = new Image(PLACEHOLDER_IMAGE_LOCAL_URL_2, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true);
+        image.frames = images;
+        image.duration = 0.5;
+
         TileContainer tileContainer = new TileContainer(
-          new Image(PLACEHOLDER_IMAGE_LOCAL_URL_1, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true),
-            currentMap.getTile(i, j).getTile());
+          image.getFrame(time), currentMap.getTile(i, j).getTile());
 
         gc.drawImage(tileContainer.getImage(), currentPixelWidth, currentPixelHeight);
         currentPixelHeight += HEIGHT_OF_TILE;
