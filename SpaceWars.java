@@ -32,6 +32,8 @@ public class SpaceWars extends Application {
 
   private final int WIDTH_OF_TILE = 100;
   private final int HEIGHT_OF_TILE = 100;
+  private int WIDTH_OF_WINDOW;
+  private int HEIGHT_OF_WINDOW;
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_2 = "/images/advance_wars_variety_of_units.jpg";
   private final String PLACEHOLDER_TEST_IMAGE_LOCAL_URL = "/images/trump_kissing.jpg";
@@ -49,6 +51,7 @@ public class SpaceWars extends Application {
     String mapSelection = getMapSelection();
 
     currentMap = MapCreator.testMap1();
+    calculateWindowSize();
     canvas = new Canvas(WIDTH_OF_TILE * currentMap.getWidth(), HEIGHT_OF_TILE * currentMap.getHeight());
     gc = canvas.getGraphicsContext2D();
     // writeCanvas();
@@ -67,7 +70,7 @@ public class SpaceWars extends Application {
         double y = 232 + 128 * Math.sin(t);
 
         // should use the new variable that calculates that size of the window
-        gc.clearRect(0, 0, WIDTH_OF_TILE * currentMap.getWidth(), HEIGHT_OF_TILE * currentMap.getHeight());
+        gc.clearRect(0, 0, WIDTH_OF_WINDOW, HEIGHT_OF_WINDOW);
         writeCanvas(t);
 
       }
@@ -117,6 +120,14 @@ public class SpaceWars extends Application {
    currentPixelWidth += WIDTH_OF_TILE;
     currentPixelHeight = 0;
     }
+  }
+
+  /**
+  * calculates the width and height of the window based on current map and stores them
+  */
+  private void calculateWindowSize() {
+    this.WIDTH_OF_WINDOW = WIDTH_OF_TILE * currentMap.getWidth();
+    this.HEIGHT_OF_WINDOW = HEIGHT_OF_TILE * currentMap.getHeight();
   }
 
   /**
