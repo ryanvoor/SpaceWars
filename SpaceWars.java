@@ -166,17 +166,6 @@ public class SpaceWars extends Application {
   }
 
   /**
-  * gets the EventHandler for an individual tile on a map
-  * @return EventHandler the method that will run when a Tile get's clicked on
-  */
-  private EventHandler getTileMouseClickedEvent() {
-    return (e -> {
-      // temp
-      System.out.println(getTileFromPixelCoordinates((int) ((MouseEvent) e).getX(), (int) ((MouseEvent) e).getY(), currentMap).getTile().getTerrain());
-    });
-  }
-
-  /**
   * private helper method that finds the tile on the input map that contains
   * the input coordinates's pixel
   * @param width the x-coordinate (horizontal) (starts in top-right)
