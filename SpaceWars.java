@@ -19,7 +19,8 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 import javafx.animation.AnimationTimer;
-// import javafx.
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 
 public class SpaceWars extends Application {
 
@@ -33,6 +34,7 @@ public class SpaceWars extends Application {
   private final int HEIGHT_OF_TILE = 100;
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_2 = "/images/advance_wars_variety_of_units.jpg";
+  private final String PLACEHOLDER_TEST_IMAGE_LOCAL_URL = "/images/trump_kissing.jpg";
   private Map currentMap;
   private Canvas canvas;
   private GraphicsContext gc;
@@ -75,16 +77,19 @@ public class SpaceWars extends Application {
         //   for (TileContainer tile: array) {
         //     gc.drawImage(image.getFrame(t), posX, posY, scaleX * width, scaleY * height);
 
-        //   }
-        // }
-
-
-        /**
-          how to translate this into the drawing the current frame of the image for
-        */
-
       }
     }.start();
+
+    scene.setOnKeyPressed(new EventHandler<KeyEvent>()  {
+      @Override
+      public void handle(KeyEvent e) {
+        if (e.getCode().equals(KeyCode.SPACE)) {
+          // remember to make mountains matter (will need to create that class as well as put an if statement in the writeCanvas method
+          // also could redesign that method so that the image that is used by that class is stored in the Map or Tile or something so I don't have to keep editing that one method
+          currentMap.setTile(0, 0, new TileContainer(new Tile(new Mountain())));
+        }
+      }
+    });
 
     showWindow(stage, scene);
   }
@@ -108,10 +113,16 @@ public class SpaceWars extends Application {
         TileContainer tileContainer = new TileContainer(
           image.getFrame(time), currentMap.getTile(i, j).getTile());
 
-        gc.drawImage(tileContainer.getImage(), currentPixelWidth, currentPixelHeight);
+        // temp to test the paradigm of edit map and it just updates the drawing
+        // this implementation works, however the tile on the map stays a mountain forever (which I suppose is to be expected)
+        if (tileContainer.getTile().getTerrain() instanceof Mountain) {
+          gc.drawImage(new Image(PLACEHOLDER_TEST_IMAGE_LOCAL_URL, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
+        } else {
+          gc.drawImage(tileContainer.getImage(), currentPixelWidth, currentPixelHeight);
+        }
         currentPixelHeight += HEIGHT_OF_TILE;
       }
-    currentPixelWidth += WIDTH_OF_TILE;
+   currentPixelWidth += WIDTH_OF_TILE;
     currentPixelHeight = 0;
     }
   }
