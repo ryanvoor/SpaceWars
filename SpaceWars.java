@@ -59,10 +59,8 @@ public class SpaceWars extends Application {
 
     final long startNanoTime = System.nanoTime();
 
-    new AnimationTimer()
-    {
-      public void handle(long currentNanoTime)
-      {
+    new AnimationTimer() {
+      public void handle(long currentNanoTime) {
         double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
         double x = 232 + 128 * Math.cos(t);
@@ -71,11 +69,6 @@ public class SpaceWars extends Application {
         // should use the new variable that calculates that size of the window
         gc.clearRect(0, 0, WIDTH_OF_TILE * currentMap.getWidth(), HEIGHT_OF_TILE * currentMap.getHeight());
         writeCanvas(t);
-
-        // TileContainer[][] tiles = currentMap.getTiles();
-        // for (TileContainer[] array: tiles) {
-        //   for (TileContainer tile: array) {
-        //     gc.drawImage(image.getFrame(t), posX, posY, scaleX * width, scaleY * height);
 
       }
     }.start();
@@ -96,6 +89,7 @@ public class SpaceWars extends Application {
 
   /**
   * writes the current map to the canvas to be displayed
+  * @param time the current time used to calculate frames of images
   */
   private void writeCanvas(double time) {
     int currentPixelWidth = 0;
@@ -103,15 +97,13 @@ public class SpaceWars extends Application {
     for (int i = 0; i < currentMap.getWidth(); i++) {
       for (int j = 0; j < currentMap.getHeight(); j++) {
 
-        AnimatedImage image = new AnimatedImage();
         Image[] images = new Image[2];
         images[0] = new Image(PLACEHOLDER_IMAGE_LOCAL_URL_1, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true);
         images[1] = new Image(PLACEHOLDER_IMAGE_LOCAL_URL_2, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true);
-        image.frames = images;
-        image.duration = 0.5;
+        AnimatedImage image = new AnimatedImage(images, 0.5);
 
         TileContainer tileContainer = new TileContainer(
-          image.getFrame(time), currentMap.getTile(i, j).getTile());
+          image.getCurrentFrame(time), currentMap.getTile(i, j).getTile());
 
         // temp to test the paradigm of edit map and it just updates the drawing
         // this implementation works, however the tile on the map stays a mountain forever (which I suppose is to be expected)
