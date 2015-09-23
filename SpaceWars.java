@@ -42,18 +42,20 @@ public class SpaceWars extends Application {
   */
   @Override public void start(Stage stage) {
 
-    // not actually using this at this point, just a proof of concept thing I guess
+    // not actually using this at this point, just a proof of concept thing
     String mapSelection = getMapSelection();
 
     currentMap = MapCreator.testMap1();
     calculateWindowSize();
-    canvas = new Canvas(WIDTH_OF_TILE * currentMap.getWidth(), HEIGHT_OF_TILE * currentMap.getHeight());
+
+    canvas = new Canvas(WIDTH_OF_WINDOW, HEIGHT_OF_WINDOW);
     gc = canvas.getGraphicsContext2D();
-    // writeCanvas();
 
     Pane container = new Pane();
     container.getChildren().add(canvas);
     Scene scene = new Scene(container);
+
+    scene.setOnKeyPressed(getSceneKeyPressedHandler());
 
     final long startNanoTime = System.nanoTime();
 
@@ -66,11 +68,8 @@ public class SpaceWars extends Application {
 
         gc.clearRect(0, 0, WIDTH_OF_WINDOW, HEIGHT_OF_WINDOW);
         writeCanvas(t);
-
       }
     }.start();
-
-    scene.setOnKeyPressed(getSceneKeyPressedHandler());
 
     showWindow(stage, scene);
   }
@@ -84,25 +83,12 @@ public class SpaceWars extends Application {
     int currentPixelHeight = 0;
     for (int i = 0; i < currentMap.getWidth(); i++) {
       for (int j = 0; j < currentMap.getHeight(); j++) {
+        TileContainer tileContainer = currentMap.getTile(i, j);
+        gc.drawImage(tileContainer.getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
 
-        Image[] images = new Image[2];
-        images[0] = new Image(PLACEHOLDER_IMAGE_LOCAL_URL_1, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true);
-        images[1] = new Image(PLACEHOLDER_IMAGE_LOCAL_URL_2, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true);
-        AnimatedImage image = new AnimatedImage(images, 0.5);
-
-        TileContainer tileContainer = new TileContainer(
-          image.getCurrentFrame(time), currentMap.getTile(i, j).getTile());
-
-        // temp to test the paradigm of edit map and it just updates the drawing
-        // this implementation works, however the tile on the map stays a mountain forever (which I suppose is to be expected)
-        if (tileContainer.getTile().getTerrain() instanceof Mountain) {
-          gc.drawImage(new Image(PLACEHOLDER_TEST_IMAGE_LOCAL_URL, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
-        } else {
-          gc.drawImage(tileContainer.getImage(), currentPixelWidth, currentPixelHeight);
-        }
         currentPixelHeight += HEIGHT_OF_TILE;
       }
-   currentPixelWidth += WIDTH_OF_TILE;
+    currentPixelWidth += WIDTH_OF_TILE;
     currentPixelHeight = 0;
     }
   }
@@ -116,9 +102,7 @@ public class SpaceWars extends Application {
       @Override
       public void handle(KeyEvent e) {
         if (e.getCode().equals(KeyCode.SPACE)) {
-          // remember to make mountains matter (will need to create that class as well as put an if statement in the writeCanvas method
-          // also could redesign that method so that the image that is used by that class is stored in the Map or Tile or something so I don't have to keep editing that one method
-          currentMap.setTile(0, 0, new TileContainer(new Tile(new Mountain())));
+          // this is empty for the time being
         }
       }
     };

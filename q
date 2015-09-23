@@ -1,0 +1,155 @@
+[33mcommit 8f5549de6e416d2cfb041f49b4026ead5d878439[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Wed Sep 23 10:40:48 2015 -0400
+
+    Put scene KeyPressed EventHandler into its own helper method
+
+[33mcommit bd65ac7597efb661cd352f0fcab79c93e2a347f4[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Wed Sep 23 10:34:39 2015 -0400
+
+    added width and height variables for the window in SpaceWars.java
+
+[33mcommit 9512057e3a2d07f0db7bf9c76a4fe57401698b09[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Wed Sep 23 10:26:27 2015 -0400
+
+    remove getTileMouseClickedEvent method because it is now unnecessary
+
+[33mcommit f7048d3e401832cdf3853a81e6cf0c155146db06[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Wed Sep 23 10:24:11 2015 -0400
+
+    Altered AnimatedImage class to have private instance variables as well as getters and setters
+
+[33mcommit 93018c618594c9ffe309da28d76644f76856d2b2[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Tue Sep 22 22:38:54 2015 -0400
+
+    Added proof of concept, tile 0, 0 will change to a different picture when space bar is pressed
+
+[33mcommit f68e3467b7416ce0ef69e6ff69f34cb3a2d74ab8[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Tue Sep 22 10:10:52 2015 -0500
+
+    Got basic animated images working, still slow however
+
+[33mcommit b52e61e3dad36d1ed3160367632c3813cb7969d8[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Sun Sep 6 18:25:42 2015 -0500
+
+    Switched to use Canvas rather than HBox of VBoxes
+
+[33mcommit 2d4e8a677d7662c25460d266948fb48ba6617a93[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Sun Sep 6 17:33:15 2015 -0500
+
+    Changed Tile variable to be private in TileContainer class
+
+[33mcommit 8e54a795fe91a16e930adc4df270102611d77bd9[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Sun Sep 6 17:31:50 2015 -0500
+
+    Changed setTile in Map class to use TileContainer rather than Tile
+
+[33mcommit 2fd34cf424398f28a8b4e393339024264db1584f[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Sun Sep 6 17:30:19 2015 -0500
+
+    Changed image for alternation proof of concept
+
+[33mcommit 6305785cd1c70ae5d671b3423232629b9807c90a[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Wed Aug 26 10:29:37 2015 -0500
+
+    Removed uneccessary comment
+
+[33mcommit 5e37cd0a5ad3c6ffe5339bf54f00822b2b24ad3f[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Wed Aug 26 10:28:22 2015 -0500
+
+    Made class variables private and final as necessary
+
+[33mcommit 17ba87b1b80a1613cae67159caad7adfde1b5cef[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Wed Aug 26 08:56:49 2015 -0500
+
+    Moved creation of specific maps from Map class to a final class MapCreator
+
+[33mcommit 7e1591df88252e82ea969e40e67c0559ab66c1c3[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Mon Aug 24 23:09:51 2015 -0500
+
+    Changed SpaceWars.java to use a Map's data rather than hardcoded data. Also wrote code to take in a user input, it does not do anything at the moment
+
+[33mcommit 59992804a2be8706da3d82ffa69314bf23ac67a1[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Mon Aug 24 23:06:55 2015 -0500
+
+    Switched Map class to use a matrix of TileContainers rather than tiles and added a static method that generates a test map
+
+[33mcommit f7c4e26a9df120abd1a01e8bf77c4409ea304d1c[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Mon Aug 24 23:04:45 2015 -0500
+
+    Added constructor to the TileContainer class that takes in only a tile
+
+[33mcommit a514830dd45cc2e6208a440813b68e855fa5f190[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Mon Aug 24 22:06:06 2015 -0500
+
+    Added TileContainer class to use to hold the information of a tile and also be visually represented like an ImageView
+
+[33mcommit fb3fd37ff79f0a9359edba81b3ec8cf8c1790f83[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Mon Aug 24 22:03:24 2015 -0500
+
+    Switched height and width to make more sense and added setter method for tiles
+
+[33mcommit 460de32ae979328298e713da169df5a793098615[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Sat Aug 22 11:41:50 2015 -0500
+
+    More testing/figuring stuff out in javafx's application stuff
+
+[33mcommit 6cec2c52488a0999be9b34cfe58b1028e3df6301[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Sat Aug 22 11:01:38 2015 -0500
+
+    Setup application class for javafx and added dummy/example scene as a proof of concept
+
+[33mcommit fd691c25ad13fc45da72b34286b1c0c24b77678e[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Sat Aug 22 10:51:54 2015 -0500
+
+    I compiled the files and these are the .class files
+
+[33mcommit 8931d59483ca0173c07be2b69e727b73cedd420e[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Sat Aug 22 10:45:33 2015 -0500
+
+    Removed sublime-preferences file after transfer
+
+[33mcommit 9db2d16fb8f183354f49dedfe6fb6a7d79dcd96d[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Sat Aug 22 10:15:38 2015 -0400
+
+    Sublime Preferences for switching between Operating Systems added to Repo
+
+[33mcommit d017832f79e97379cff4c31ef721fdb2ae2ab563[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Fri Aug 21 16:16:36 2015 -0400
+
+    Created controller class to handle the events of the program
+
+[33mcommit 3be2d92f6a83bbe81480babc6194b48ed1f26419[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Fri Aug 21 16:16:11 2015 -0400
+
+    Fixed bugs and added basic classes to get code to compile
+
+[33mcommit f9bba22f6651e1560334316fcbcae0c41f9d9347[m
+Author: ryanvoor <ryan.voor@gmail.com>
+Date:   Fri Aug 21 15:51:34 2015 -0400
+
+    Initial map, tile, and terrain files added

@@ -5,29 +5,20 @@
 * @version 1.0
 */
 
-import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
-public class TileContainer extends ImageView {
+public class TileContainer {
 
   private Tile tile;
+  private AnimatedImage animatedImage;
 
   /**
-  * constructor that takes in only a tile
-  * @param tile the tile to be contained by this TileContainer
-  */
-  public TileContainer(Tile tile) {
-    super();
-    this.tile = tile;
-  }
-
-  /**
-  * constructor for the TileContainer class, takes in 2 parameters
+  * constructor for the TileContainer class
   * @param image the image for this tile
   * @param tile the tile for this tile container
   */
-  public TileContainer(Image image, Tile tile) {
-    super(image);
+  public TileContainer(AnimatedImage animatedImage, Tile tile) {
+    this.animatedImage = animatedImage;
     this.tile = tile;
   }
 
@@ -50,4 +41,30 @@ public class TileContainer extends ImageView {
     return oldTile;
   }
 
+  /**
+  * getter for the AnimatedImage field of this TileContainer
+  * @return AnimatedImage the AnimatedImage of this TileContainer
+  */
+  public AnimatedImage getAnimatedImage() {
+    return animatedImage;
+  }
+
+  /**
+  * gets the calculated current frame of the AnimatedImage of this TileContainer
+  * @return Image the currentFrame of the AnimatedImage of this TileContainer
+  */
+  public Image getCurrentFrame(double time) {
+    return animatedImage.getCurrentFrame(time);
+  }
+
+  /**
+  * sets the animatedImage of this TileContainer, returning the old one
+  * @param animatedImage the new animatedImage
+  * @return AnimatedImage the old animatedImage of this TileContainer
+  */
+  public AnimatedImage setAnimatedImage(AnimatedImage animatedImage) {
+    AnimatedImage oldAnimatedImage = this.animatedImage;
+    this.animatedImage = animatedImage;
+    return oldAnimatedImage;
+  }
 }
