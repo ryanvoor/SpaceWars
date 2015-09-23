@@ -24,12 +24,7 @@ import javafx.scene.input.KeyCode;
 
 public class SpaceWars extends Application {
 
-  String TITLE = "Space Wars";
-
-  /**
-    need to set up a variable that calculates the size of the window
-  */
-
+  private String TITLE = "Space Wars";
   private final int WIDTH_OF_TILE = 100;
   private final int HEIGHT_OF_TILE = 100;
   private int WIDTH_OF_WINDOW;
@@ -69,23 +64,13 @@ public class SpaceWars extends Application {
         double x = 232 + 128 * Math.cos(t);
         double y = 232 + 128 * Math.sin(t);
 
-        // should use the new variable that calculates that size of the window
         gc.clearRect(0, 0, WIDTH_OF_WINDOW, HEIGHT_OF_WINDOW);
         writeCanvas(t);
 
       }
     }.start();
 
-    scene.setOnKeyPressed(new EventHandler<KeyEvent>()  {
-      @Override
-      public void handle(KeyEvent e) {
-        if (e.getCode().equals(KeyCode.SPACE)) {
-          // remember to make mountains matter (will need to create that class as well as put an if statement in the writeCanvas method
-          // also could redesign that method so that the image that is used by that class is stored in the Map or Tile or something so I don't have to keep editing that one method
-          currentMap.setTile(0, 0, new TileContainer(new Tile(new Mountain())));
-        }
-      }
-    });
+    scene.setOnKeyPressed(getSceneKeyPressedHandler());
 
     showWindow(stage, scene);
   }
@@ -120,6 +105,23 @@ public class SpaceWars extends Application {
    currentPixelWidth += WIDTH_OF_TILE;
     currentPixelHeight = 0;
     }
+  }
+
+  /**
+  * constructs then returns the EventHandler for key presses for the scene
+  * @return EventHandler<KeyEvent> the EventHandler for general key presses
+  */
+  private EventHandler<KeyEvent> getSceneKeyPressedHandler() {
+    return new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent e) {
+        if (e.getCode().equals(KeyCode.SPACE)) {
+          // remember to make mountains matter (will need to create that class as well as put an if statement in the writeCanvas method
+          // also could redesign that method so that the image that is used by that class is stored in the Map or Tile or something so I don't have to keep editing that one method
+          currentMap.setTile(0, 0, new TileContainer(new Tile(new Mountain())));
+        }
+      }
+    };
   }
 
   /**
