@@ -12,6 +12,7 @@ public class TileContainer {
   private Tile tile;
   private AnimatedImage animatedImage;
   private boolean hasCursor;
+  private boolean isSelected;
 
   /**
   * constructor for the TileContainer class
@@ -22,6 +23,7 @@ public class TileContainer {
     this.animatedImage = animatedImage;
     this.tile = tile;
     this.hasCursor = false;
+    this.isSelected = false;
   }
 
   /**
@@ -96,5 +98,48 @@ public class TileContainer {
   */
   public boolean hasCursor() {
     return this.hasCursor;
+  }
+
+  // SHOULD I PREVENT THIS METHOD FROM WORKING IF THIS TILECONTAINER DOES NOT HAVE THE CURSOR? FOR NOW I THINK NOT
+
+
+  // RIGHT NOW MULTIPLE TILES CAN BE SELECTED AT ONCE AND I CAN STILL MOVE THE CURSOR WHILE THE CURRENT TILE IS SELECTED
+  // actually that's fine, I just have to handle the different cases of combination of tile selection blah blah blah in the logic that fires when a tile is selected
+  /**
+  * selects this TileContainer, fires events that occur when a tile is selected
+  * should only be called when the cursor is on this tile
+  * @return boolean whether this TileContainer was previously selected
+  */
+  public boolean select() {
+    boolean oldIsSelected = this.isSelected;
+    this.isSelected = true;
+    if (/* tile is occupied*/ false) {
+      // do something
+    }
+    // etc. with the other states of the tiles
+
+    // when making selections of (for example) where a unit will move after it has been selected I
+    // suspect that I will need to write a separate method to handle that because I will need to
+    // pass in parameters etc.
+    return oldIsSelected;
+  }
+
+  /**
+  * removes selection from this TileContainer
+  * should only be called when the cursor is on this tile
+  * @return boolean whether this TileContainer was previously selected
+  */
+  public boolean deselect() {
+    boolean oldIsSelected = this.isSelected;
+    this.isSelected = false;
+    return oldIsSelected;
+  }
+
+  /**
+  * returns whether this TileContainer is currently selected
+  * @return boolean whether this TileContainer is currently selected
+  */
+  public boolean isSelected() {
+    return this.isSelected;
   }
 }

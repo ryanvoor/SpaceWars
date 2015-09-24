@@ -31,7 +31,8 @@ public class SpaceWars extends Application {
   private int HEIGHT_OF_WINDOW;
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_2 = "/images/advance_wars_variety_of_units.jpg";
-  private final String PLACEHOLDER_TEST_IMAGE_LOCAL_URL = "/images/trump_kissing.jpg";
+  private final String PLACEHOLDER_IMAGE_LOCAL_URL_3 = "/images/trump_kissing.jpg";
+  private final String PLACEHOLDER_IMAGE_LOCAL_URL_4 = "/images/obama_posing.jpg";
   private Map currentMap;
   private Canvas canvas;
   private GraphicsContext gc;
@@ -85,12 +86,14 @@ public class SpaceWars extends Application {
       for (int j = 0; j < currentMap.getHeight(); j++) {
         TileContainer tileContainer = currentMap.getTile(i, j);
 
-        if (!tileContainer.hasCursor()) {
-          gc.drawImage(tileContainer.getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
+        // will need to change this so that it actually does something that makes sense with a cursor
+        // because for the time being it is just a picture of Donald Trump that moves around
+        if (tileContainer.isSelected()) {
+          gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_4, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
+        } else if (tileContainer.hasCursor()) {
+          gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_3, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
         } else {
-          // will need to change this so that it actually does something that makes sense with a cursor
-          // because for the time being it is just a picture of Donald Trump that moves around
-          gc.drawImage(new Image(PLACEHOLDER_TEST_IMAGE_LOCAL_URL, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
+          gc.drawImage(tileContainer.getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
         }
 
         currentPixelHeight += HEIGHT_OF_TILE;
@@ -117,6 +120,8 @@ public class SpaceWars extends Application {
           currentMap.moveCursor(Direction.UP);
         } else if (e.getCode().equals(KeyCode.DOWN)) {
           currentMap.moveCursor(Direction.DOWN);
+        } else if (e.getCode().equals(KeyCode.E)) {
+          currentMap.selectCurrentCursorTile();
         }
       }
     };

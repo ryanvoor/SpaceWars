@@ -105,4 +105,22 @@ public class Map {
       }
     }
   }
+
+  /**
+  * gets the TileContainer of this map that currently has the cursor
+  * @return TileContainer the TileContainer of this map that currently has the cursor
+  */
+  public TileContainer getCurrentCursorTile() {
+    return this.getTile(this.currentCursorWidth, this.currentCursorHeight);
+  }
+
+  /**
+  * selects the TileContainer that currently has the cursor
+  * @return boolean whether the current cursor Tile was already selected
+  */
+  public boolean selectCurrentCursorTile() {
+    boolean currentCursorWasSelected = this.getCurrentCursorTile().isSelected();
+    this.getCurrentCursorTile().select();
+    return currentCursorWasSelected;
+  }
 }

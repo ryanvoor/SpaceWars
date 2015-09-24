@@ -1,3 +1,4 @@
+// CONSIDER SCRAPPING THIS CLASS AND JUST PUTTING IT INTO THE TILECONTAINER CLASS AND CALLING THAT CLASS TILE
 /**
 * class that represents a tile on the map
 * @author Ryan Voor
