@@ -29,6 +29,11 @@ public final class MapCreator {
         testMap1.setTile(i, j, new TileContainer(animatedImage, new Tile(null)));
       }
     }
+    // starting cursor location
+    testMap1.getTile(0, 0).giveCursor();
     return testMap1;
   }
+  /**
+    need to write a helper method for this class that gets the image for the TileContainer based on what it's terrain is.
+  */
 }

@@ -11,6 +11,7 @@ public class TileContainer {
 
   private Tile tile;
   private AnimatedImage animatedImage;
+  private boolean hasCursor;
 
   /**
   * constructor for the TileContainer class
@@ -20,6 +21,7 @@ public class TileContainer {
   public TileContainer(AnimatedImage animatedImage, Tile tile) {
     this.animatedImage = animatedImage;
     this.tile = tile;
+    this.hasCursor = false;
   }
 
   /**
@@ -66,5 +68,33 @@ public class TileContainer {
     AnimatedImage oldAnimatedImage = this.animatedImage;
     this.animatedImage = animatedImage;
     return oldAnimatedImage;
+  }
+
+  /**
+  * give's this TileContainer the cursor
+  * @return boolean whether this TileContainer had the cursor previously
+  */
+  public boolean giveCursor() {
+   boolean oldHasCursor = this.hasCursor;
+   this.hasCursor = true;
+   return oldHasCursor;
+  }
+
+  /**
+  * remove's the cursor from this TileContainer
+  * @return boolean whether this TileContainer had the cursor previously
+  */
+  public boolean removeCursor() {
+   boolean oldHasCursor = this.hasCursor;
+   this.hasCursor = false;
+   return oldHasCursor;
+  }
+
+  /**
+  * get's whether this TileContainer has the cursor
+  * @return boolean whether this TileContainer has the cursor
+  */
+  public boolean hasCursor() {
+    return this.hasCursor;
   }
 }

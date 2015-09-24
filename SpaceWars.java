@@ -84,7 +84,14 @@ public class SpaceWars extends Application {
     for (int i = 0; i < currentMap.getWidth(); i++) {
       for (int j = 0; j < currentMap.getHeight(); j++) {
         TileContainer tileContainer = currentMap.getTile(i, j);
-        gc.drawImage(tileContainer.getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
+
+        if (!tileContainer.hasCursor()) {
+          gc.drawImage(tileContainer.getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
+        } else {
+          // will need to change this so that it actually does something that makes sense with a cursor
+          // because for the time being it is just a picture of Donald Trump that moves around
+          gc.drawImage(new Image(PLACEHOLDER_TEST_IMAGE_LOCAL_URL, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
+        }
 
         currentPixelHeight += HEIGHT_OF_TILE;
       }
@@ -101,8 +108,15 @@ public class SpaceWars extends Application {
     return new EventHandler<KeyEvent>() {
       @Override
       public void handle(KeyEvent e) {
-        if (e.getCode().equals(KeyCode.SPACE)) {
-          // this is empty for the time being
+        // I am getting ArrayIndexOutOfBounds exception at -1 when I input certain keys to try to move the cursor
+        if (e.getCode().equals(KeyCode.RIGHT)) {
+          currentMap.moveCursor(Direction.RIGHT);
+        } else if (e.getCode().equals(KeyCode.LEFT)) {
+          currentMap.moveCursor(Direction.LEFT);
+        } else if (e.getCode().equals(KeyCode.UP)) {
+          currentMap.moveCursor(Direction.UP);
+        } else if (e.getCode().equals(KeyCode.DOWN)) {
+          currentMap.moveCursor(Direction.DOWN);
         }
       }
     };
@@ -162,6 +176,7 @@ public class SpaceWars extends Application {
     stage.show();
   }
 
+  // not actually using this method anymore... consider getting rid of it unless you want to use a mouse as your input device?
   /**
   * private helper method that finds the tile on the input map that contains
   * the input coordinates's pixel

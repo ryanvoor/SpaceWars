@@ -3,8 +3,14 @@
 * @author Ryan Voor
 * @version 1.0
 */
+// SHOULD GIVE MAPS A STARTING CURSOR LOCATION
+
 public class Map {
+
   private TileContainer[][] tiles;
+  // need to actually set these variables
+  private int currentCursorWidth;
+  private int currentCursorHeight;
 
   /**
   * public constructor for the Map class
@@ -12,7 +18,9 @@ public class Map {
   * @param height, number of tiles vertically for this map
   */
   public Map(int width, int height) {
-    tiles = new TileContainer[width][height];
+    this.tiles = new TileContainer[width][height];
+    this.currentCursorWidth = 0;
+    this.currentCursorHeight = 0;
   }
 
   /**
@@ -66,4 +74,35 @@ public class Map {
     return tiles[0].length;
   }
 
+  /**
+  * moves the cursor of this map in the specified direction
+  * @param direction the direction to move the cursor
+  */
+  public void moveCursor(Direction direction) {
+    if (direction.equals(Direction.RIGHT)) {
+      if (currentCursorWidth != this.getWidth() - 1) {
+        this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
+        this.currentCursorWidth += 1;
+        this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+      }
+    } else if (direction.equals(Direction.LEFT)) {
+      if (currentCursorWidth != 0) {
+        this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
+        this.currentCursorWidth -= 1;
+        this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+      }
+    } else if (direction.equals(Direction.UP)) {
+      if (currentCursorHeight != 0) {
+        this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
+        this.currentCursorHeight -= 1;
+        this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+      }
+    } else {
+      if (currentCursorHeight != this.getHeight() - 1) {
+        this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
+        this.currentCursorHeight += 1;
+        this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+      }
+    }
+  }
 }
