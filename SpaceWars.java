@@ -88,12 +88,16 @@ public class SpaceWars extends Application {
 
         // will need to change this so that it actually does something that makes sense with a cursor
         // because for the time being it is just a picture of Donald Trump that moves around
-        if (tileContainer.isSelected()) {
-          gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_4, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
-        } else if (tileContainer.hasCursor()) {
+        //if (tileContainer.isSelected()) {
+        //  gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_4, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
+        //} else
+        if (tileContainer.hasCursor()) {
           gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_3, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
         } else {
           gc.drawImage(tileContainer.getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
+        }
+        if (tileContainer.isSelected()) {
+          gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_4, WIDTH_OF_TILE / 2, HEIGHT_OF_TILE / 2, false, true), currentPixelWidth, currentPixelHeight);
         }
 
         currentPixelHeight += HEIGHT_OF_TILE;
@@ -111,7 +115,6 @@ public class SpaceWars extends Application {
     return new EventHandler<KeyEvent>() {
       @Override
       public void handle(KeyEvent e) {
-        // I am getting ArrayIndexOutOfBounds exception at -1 when I input certain keys to try to move the cursor
         if (e.getCode().equals(KeyCode.RIGHT)) {
           currentMap.moveCursor(Direction.RIGHT);
         } else if (e.getCode().equals(KeyCode.LEFT)) {
@@ -121,7 +124,7 @@ public class SpaceWars extends Application {
         } else if (e.getCode().equals(KeyCode.DOWN)) {
           currentMap.moveCursor(Direction.DOWN);
         } else if (e.getCode().equals(KeyCode.E)) {
-          currentMap.selectCurrentCursorTile();
+          currentMap.activateCurrentCursorTile();
         }
       }
     };

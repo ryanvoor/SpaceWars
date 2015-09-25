@@ -118,9 +118,31 @@ public class Map {
   * selects the TileContainer that currently has the cursor
   * @return boolean whether the current cursor Tile was already selected
   */
-  public boolean selectCurrentCursorTile() {
+  private boolean selectCurrentCursorTile() {
     boolean currentCursorWasSelected = this.getCurrentCursorTile().isSelected();
     this.getCurrentCursorTile().select();
     return currentCursorWasSelected;
+  }
+
+  /**
+  * deselects the TileContainer that currently has the cursor
+  * @return boolean whether the current cursor Tile was already selected
+  */
+  private boolean deselectCurrentCursorTile() {
+    boolean currentCursorWasSelected = this.getCurrentCursorTile().isSelected();
+    this.getCurrentCursorTile().deselect();
+    return currentCursorWasSelected;
+  }
+
+  /**
+  * if the current cursor tile is selected, deselects it, otherwise selects it
+  * @return whether the current cursor tile was selected
+  */
+  public boolean activateCurrentCursorTile() {
+    if (this.getCurrentCursorTile().isSelected()) {
+      return this.deselectCurrentCursorTile();
+    } else {
+      return this.selectCurrentCursorTile();
+    }
   }
 }
