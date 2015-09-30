@@ -25,14 +25,15 @@ import javafx.scene.input.KeyCode;
 public class SpaceWars extends Application {
 
   private String TITLE = "Space Wars";
-  private final int WIDTH_OF_TILE = 100;
-  private final int HEIGHT_OF_TILE = 100;
+  private final static int WIDTH_OF_TILE = 100;
+  private final static int HEIGHT_OF_TILE = 100;
   private int WIDTH_OF_WINDOW;
   private int HEIGHT_OF_WINDOW;
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_2 = "/images/advance_wars_variety_of_units.jpg";
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_3 = "/images/trump_kissing.jpg";
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_4 = "/images/obama_posing.jpg";
+  private final String PLAINS_IMAGE_LOCAL_URL = "/images/plains.jpg";
   private Map currentMap;
   private Canvas canvas;
   private GraphicsContext gc;
@@ -86,23 +87,41 @@ public class SpaceWars extends Application {
       for (int j = 0; j < currentMap.getHeight(); j++) {
         TileContainer tileContainer = currentMap.getTile(i, j);
 
-        // will need to change this so that it actually does something that makes sense with a cursor
-        // because for the time being it is just a picture of Donald Trump that moves around
-        //if (tileContainer.isSelected()) {
-        //  gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_4, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
-        //} else
+
+        // STEPS THAT I NEED TO MAKE HAPPEN
+
+        // draw the background
+        gc.drawImage(tileContainer.getTerrainImage(), currentPixelWidth, currentPixelHeight);
+
+        // draw the units
+        // for the moment this just draws the primary occupant and ignores both the secondary occupant as well as if the Tile is contested
+        //if (tileContainer.getTile().isOccupied()) {
+        //  gc.drawImage(tileContainer.getTile().getPrimaryOccupantImage().getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
+        //}
+
+        // will need to figure out what these will look like with Ryan
+
+        // draw the selection
+
+
+        // draw the cursor
+
+
+
         if (tileContainer.hasCursor()) {
-          gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_3, WIDTH_OF_TILE, HEIGHT_OF_TILE, false, true), currentPixelWidth, currentPixelHeight);
+          gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_3, SpaceWars.getWidthOfTile(), SpaceWars.getHeightOfTile(), false, true), currentPixelWidth, currentPixelHeight);
         } else {
-          gc.drawImage(tileContainer.getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
+          // draws background of the tiles
+          // need to change this so that it is using the code written above, in this method, as well as the backgroundImage code in TileContainer
+          //gc.drawImage(tileContainer.getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
         }
         if (tileContainer.isSelected()) {
-          gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_4, WIDTH_OF_TILE / 2, HEIGHT_OF_TILE / 2, false, true), currentPixelWidth, currentPixelHeight);
+          //gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_4, SpaceWars.getWidthOfTile() / 2, SpaceWars.getHeightOfTile() / 2, false, true), currentPixelWidth, currentPixelHeight);
         }
 
-        currentPixelHeight += HEIGHT_OF_TILE;
+        currentPixelHeight += SpaceWars.getHeightOfTile();
       }
-    currentPixelWidth += WIDTH_OF_TILE;
+    currentPixelWidth += SpaceWars.getWidthOfTile();
     currentPixelHeight = 0;
     }
   }
@@ -131,11 +150,27 @@ public class SpaceWars extends Application {
   }
 
   /**
+  * getter for the width of a tile
+  * @return int the width of a tile
+  */
+  public static int getWidthOfTile() {
+    return WIDTH_OF_TILE;
+  }
+
+  /**
+  * getter for the height of a tile
+  * @return int the height of a tile
+  */
+  public static int getHeightOfTile() {
+    return HEIGHT_OF_TILE;
+  }
+
+  /**
   * calculates the width and height of the window based on current map and stores them
   */
   private void calculateWindowSize() {
-    this.WIDTH_OF_WINDOW = WIDTH_OF_TILE * currentMap.getWidth();
-    this.HEIGHT_OF_WINDOW = HEIGHT_OF_TILE * currentMap.getHeight();
+    this.WIDTH_OF_WINDOW = SpaceWars.getWidthOfTile() * currentMap.getWidth();
+    this.HEIGHT_OF_WINDOW = SpaceWars.getHeightOfTile() * currentMap.getHeight();
   }
 
   /**
@@ -194,8 +229,8 @@ public class SpaceWars extends Application {
   * @return TileContainer the tile container that contains the pixel with this coordinate
   */
   private TileContainer getTileFromPixelCoordinates(int width, int height, Map map) {
-    int column = width / WIDTH_OF_TILE;
-    int row = height / HEIGHT_OF_TILE;
+    int column = width / SpaceWars.getWidthOfTile();
+    int row = height / SpaceWars.getHeightOfTile();
     return map.getTile(column, row);
   }
 }
