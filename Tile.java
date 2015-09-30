@@ -74,6 +74,14 @@ public class Tile {
   }
 
   /**
+  * calculates and returns whether this Tile is occupied
+  * @return boolean whether this Tile is occupied
+  */
+  public boolean isOccupied() {
+    return this.primaryOccupant != null;
+  }
+
+  /**
   * getter for the primary occupant of this tile
   * @return Unit the primary occupant of this tile
   */
@@ -95,9 +103,9 @@ public class Tile {
   * @return Boolean whether the newOccupant was successfully added
   */
   public Boolean addOccupant(Unit newOccupant) {
-    if (primaryOccupant != null) {
+    if (primaryOccupant == null && secondaryOccupant == null) {
       this.primaryOccupant = newOccupant;
-    } else if (secondaryOccupant != null) {
+    } else if (primaryOccupant != null && secondaryOccupant == null) {
       this.secondaryOccupant = newOccupant;
     } else {
       return false;
@@ -131,6 +139,22 @@ public class Tile {
   */
   public Boolean isContested() {
     return (primaryOccupant != null && secondaryOccupant != null);
+  }
+
+  /**
+  * returns the image of the primary occupant of this Tile
+  * @return AnimatedImage the image of the primary occupant of this Tile, null if it doesn't exist
+  */
+  public AnimatedImage getPrimaryOccupantImage() {
+    return primaryOccupant.getImage();
+  }
+
+  /**
+  * returns the image of the secondary occupant of this Tile
+  * @return AnimatedImage the image of the secondary occupant of this tile, null if it doesn't exist
+  */
+  public AnimatedImage getSecondaryOccupantImage() {
+    return secondaryOccupant.getImage();
   }
 
 }

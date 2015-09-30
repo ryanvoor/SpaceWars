@@ -3,6 +3,25 @@
 * @author Ryan Voor
 * @version 1.0
 */
+import javafx.scene.image.Image;
+
 public class Unit {
 
+  private AnimatedImage animatedImage;
+
+  /**
+  * constructor for this Unit class, takes in an image
+  * @param image the image of this Unit
+  */
+  public Unit(AnimatedImage animatedImage) {
+    this.animatedImage = animatedImage;
+  }
+
+  /**
+  * getter for the image field of this Unit
+  * @return Image this unit's image
+  */
+  public AnimatedImage getImage() {
+    return this.animatedImage;
+  }
 }

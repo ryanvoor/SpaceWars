@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 
 public class SpaceWars extends Application {
 
@@ -90,33 +91,25 @@ public class SpaceWars extends Application {
 
         // STEPS THAT I NEED TO MAKE HAPPEN
 
+        // will need to figure out what these will look like with Ryan
+
         // draw the background
         gc.drawImage(tileContainer.getTerrainImage(), currentPixelWidth, currentPixelHeight);
 
         // draw the units
-        // for the moment this just draws the primary occupant and ignores both the secondary occupant as well as if the Tile is contested
-        //if (tileContainer.getTile().isOccupied()) {
-        //  gc.drawImage(tileContainer.getTile().getPrimaryOccupantImage().getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
-        //}
-
-        // will need to figure out what these will look like with Ryan
-
-        // draw the selection
-
+        if (tileContainer.getTile().isOccupied()) {
+          gc.drawImage(tileContainer.getTile().getPrimaryOccupantImage().getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
+        }
 
         // draw the cursor
-
-
-
         if (tileContainer.hasCursor()) {
           gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_3, SpaceWars.getWidthOfTile(), SpaceWars.getHeightOfTile(), false, true), currentPixelWidth, currentPixelHeight);
-        } else {
-          // draws background of the tiles
-          // need to change this so that it is using the code written above, in this method, as well as the backgroundImage code in TileContainer
-          //gc.drawImage(tileContainer.getCurrentFrame(time), currentPixelWidth, currentPixelHeight);
         }
+
+        // draw the selection
         if (tileContainer.isSelected()) {
-          //gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_4, SpaceWars.getWidthOfTile() / 2, SpaceWars.getHeightOfTile() / 2, false, true), currentPixelWidth, currentPixelHeight);
+          gc.setFill(new Color(0, 0, 1.0, 0.5));
+          gc.fillRect(currentPixelWidth, currentPixelHeight, SpaceWars.getWidthOfTile(), SpaceWars.getHeightOfTile());
         }
 
         currentPixelHeight += SpaceWars.getHeightOfTile();
