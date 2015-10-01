@@ -22,12 +22,13 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class SpaceWars extends Application {
 
   private String TITLE = "Space Wars";
-  private final static int WIDTH_OF_TILE = 100;
-  private final static int HEIGHT_OF_TILE = 100;
+  private final static int WIDTH_OF_TILE = 50;
+  private final static int HEIGHT_OF_TILE = 50;
   private int WIDTH_OF_WINDOW;
   private int HEIGHT_OF_WINDOW;
   private final String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
@@ -38,6 +39,7 @@ public class SpaceWars extends Application {
   private Map currentMap;
   private Canvas canvas;
   private GraphicsContext gc;
+  private VBox infoBar;
 
   /**
   * Primary controller method for the application
@@ -55,7 +57,13 @@ public class SpaceWars extends Application {
     gc = canvas.getGraphicsContext2D();
 
     Pane container = new Pane();
-    container.getChildren().add(canvas);
+
+    // BEFORE I CAN MAKE THIS ADDITION TO THE GUI ACTUALLY DO ANYTHING I NEED TO MAKE IT SO I CAN ONLY SELECT ONE TILE AT A TIME
+    HBox mapAndInfoBarContainer = new HBox();
+    infoBar = new VBox();
+    infoBar.getChildren().add(new Text("EXAMPLE TEXT"));
+    mapAndInfoBarContainer.getChildren().addAll(canvas, infoBar);
+    container.getChildren().add(mapAndInfoBarContainer);
     Scene scene = new Scene(container);
 
     scene.setOnKeyPressed(getSceneKeyPressedHandler());
@@ -88,8 +96,10 @@ public class SpaceWars extends Application {
       for (int j = 0; j < currentMap.getHeight(); j++) {
         TileContainer tileContainer = currentMap.getTile(i, j);
 
+        // NEW CURRENT TASK: MAKE SELECTING STUFF CHANGE THE BEHAVIOR OF THE CURSOR/DO DIFFERENT THINGS IF THEY SELECT A TILE THAT'S OCCUPIED V UNOCCUPIED ETC.
+        // as a temporary measure i am going to make it so that way i cannot select a new tile when i already have a selection
 
-        // STEPS THAT I NEED TO MAKE HAPPEN
+        // SHOULD ALTER THE GUI TO HAVE A SIDEBAR OR SOMETHING LIKE THAT TO DISPLAY INFORMATION ABOUT THE CURRENT SELECTION/GENERAL INFORMATION IF NOTHING IS SELECTED
 
         // will need to figure out what these will look like with Ryan
 

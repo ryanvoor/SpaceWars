@@ -3,14 +3,15 @@
 * @author Ryan Voor
 * @version 1.0
 */
-// SHOULD GIVE MAPS A STARTING CURSOR LOCATION
+// SHOULD GIVE MAPS A STARTING CURSOR LOCATION THAT ISN'T JUST (0,0) FOR EVERY MAP
 
 public class Map {
 
   private TileContainer[][] tiles;
-  // need to actually set these variables
   private int currentCursorWidth;
   private int currentCursorHeight;
+  private Integer currentSelectionWidth;
+  private Integer currentSelectionHeight;
 
   /**
   * public constructor for the Map class
@@ -21,6 +22,8 @@ public class Map {
     this.tiles = new TileContainer[width][height];
     this.currentCursorWidth = 0;
     this.currentCursorHeight = 0;
+    this.currentSelectionWidth = null;
+    this.currentSelectionHeight = null;
   }
 
   /**
@@ -121,6 +124,8 @@ public class Map {
   private boolean selectCurrentCursorTile() {
     boolean currentCursorWasSelected = this.getCurrentCursorTile().isSelected();
     this.getCurrentCursorTile().select();
+    this.currentSelectionWidth = this.currentCursorWidth;
+    this.currentSelectionHeight = this.currentCursorHeight;
     return currentCursorWasSelected;
   }
 
@@ -131,18 +136,42 @@ public class Map {
   private boolean deselectCurrentCursorTile() {
     boolean currentCursorWasSelected = this.getCurrentCursorTile().isSelected();
     this.getCurrentCursorTile().deselect();
+    this.currentSelectionWidth = null;
+    this.currentSelectionHeight = null;
     return currentCursorWasSelected;
   }
 
   /**
-  * if the current cursor tile is selected, deselects it, otherwise selects it
+  * if the current cursor tile is selected, deselects it, if this Map does not already have a selected Tile, selects it
   * @return whether the current cursor tile was selected
   */
   public boolean activateCurrentCursorTile() {
     if (this.getCurrentCursorTile().isSelected()) {
       return this.deselectCurrentCursorTile();
+    } else if (this.hasASelection()) {
+      return false;
     } else {
       return this.selectCurrentCursorTile();
+    }
+  }
+
+  /**
+  * calculates (using the currentSelectionWidth field) whether this Map has a currently selected Tile
+  * @return boolean whether a Tile on this Map is selected
+  */
+  public boolean hasASelection() {
+    return currentSelectionWidth != null;
+  }
+
+  /**
+  * gets the currently selected Tile for this Map, returns null if there is no currently selected Tile
+  * @return TileContainer the currently selected TileContainer, null if there is no selected Tile
+  */
+  public TileContainer getCurrentSelectedTile() {
+    if (this.hasASelection()) {
+      return this.getTile(this.currentSelectionWidth, this.currentSelectionHeight);
+    } else {
+      return null;
     }
   }
 }
