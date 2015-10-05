@@ -31,11 +31,11 @@ public class SpaceWars extends Application {
   private final static int HEIGHT_OF_TILE = 50;
   private int WIDTH_OF_WINDOW;
   private int HEIGHT_OF_WINDOW;
-  private final String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
-  private final String PLACEHOLDER_IMAGE_LOCAL_URL_2 = "/images/advance_wars_variety_of_units.jpg";
-  private final String PLACEHOLDER_IMAGE_LOCAL_URL_3 = "/images/trump_kissing.jpg";
-  private final String PLACEHOLDER_IMAGE_LOCAL_URL_4 = "/images/obama_posing.jpg";
-  private final String PLAINS_IMAGE_LOCAL_URL = "/images/plains.jpg";
+  public final static String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
+  public final static String PLACEHOLDER_IMAGE_LOCAL_URL_2 = "/images/advance_wars_variety_of_units.jpg";
+  public final static String PLACEHOLDER_IMAGE_LOCAL_URL_3 = "/images/trump_kissing.jpg";
+  public final static String PLACEHOLDER_IMAGE_LOCAL_URL_4 = "/images/obama_posing.jpg";
+  public final static String PLAINS_IMAGE_LOCAL_URL = "/images/plains.jpg";
   private Map currentMap;
   private Canvas canvas;
   private GraphicsContext gc;
@@ -58,7 +58,6 @@ public class SpaceWars extends Application {
 
     Pane container = new Pane();
 
-    // BEFORE I CAN MAKE THIS ADDITION TO THE GUI ACTUALLY DO ANYTHING I NEED TO MAKE IT SO I CAN ONLY SELECT ONE TILE AT A TIME
     HBox mapAndInfoBarContainer = new HBox();
     infoBar = new VBox();
     infoBar.getChildren().add(new Text("EXAMPLE TEXT"));
@@ -104,7 +103,8 @@ public class SpaceWars extends Application {
         // will need to figure out what these will look like with Ryan
 
         // draw the background
-        gc.drawImage(tileContainer.getTerrainImage(), currentPixelWidth, currentPixelHeight);
+        gc.drawImage(tileContainer.getTile().getTerrain()
+          .getImage(), currentPixelWidth, currentPixelHeight);
 
         // draw the units
         if (tileContainer.getTile().isOccupied()) {
@@ -113,7 +113,7 @@ public class SpaceWars extends Application {
 
         // draw the cursor
         if (tileContainer.hasCursor()) {
-          gc.drawImage(new Image(PLACEHOLDER_IMAGE_LOCAL_URL_3, SpaceWars.getWidthOfTile(), SpaceWars.getHeightOfTile(), false, true), currentPixelWidth, currentPixelHeight);
+          gc.drawImage(new Image(SpaceWars.PLACEHOLDER_IMAGE_LOCAL_URL_3, SpaceWars.getWidthOfTile(), SpaceWars.getHeightOfTile(), false, true), currentPixelWidth, currentPixelHeight);
         }
 
         // draw the selection

@@ -3,6 +3,8 @@
 * @author Ryan Voor
 * @version 1.0
 */
+import javafx.scene.image.Image;
+
 interface Terrain {
 
   /**
@@ -36,5 +38,11 @@ interface Terrain {
   * occupied a tile with this terrain
   */
   public int movementStatsFor(Unit unit);
+
+  /**
+  * getter for the background image of this Terrain
+  * @return Image the background image of this Terrain
+  */
+  public Image getImage();
 
 }

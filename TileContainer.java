@@ -5,12 +5,9 @@
 * @version 1.0
 */
 
-import javafx.scene.image.Image;
-
 public class TileContainer {
 
   private Tile tile;
-  private Image terrainImage;
   private boolean hasCursor;
   private boolean isSelected;
 
@@ -19,9 +16,8 @@ public class TileContainer {
   * @param image the image for this tile
   * @param tile the tile for this tile container
   */
-  public TileContainer(Tile tile, String terrainImageURL) {
+  public TileContainer(Tile tile) {
     this.tile = tile;
-    this.terrainImage = new Image(terrainImageURL, SpaceWars.getWidthOfTile(), SpaceWars.getHeightOfTile(), false, true);
     this.hasCursor = false;
     this.isSelected = false;
   }
@@ -43,14 +39,6 @@ public class TileContainer {
     Tile oldTile = this.tile;
     this.tile = tile;
     return oldTile;
-  }
-
-  /**
-  * getter for the terrain image of this TileContainer
-  * @return Image the terrain Image of this TileContainer
-  */
-  public Image getTerrainImage() {
-    return this.terrainImage;
   }
 
   /**

@@ -1,49 +1,39 @@
 /**
-* class that represents the terrain of type Mountain 
+* class that represents the terrain of type Mountain
 * @author Ryan Voor
 * @version 1.0
 */
+import javafx.scene.image.Image;
+
 public class Mountain implements Terrain {
 
-  /**
-  * returns whether the given unit can occupy this terrain
-  * @param unit the unit in question
-  * @return Boolean whether the given unit can occupy this terrain
-  */
+  // USING THE IMAGE FOR PLAINS RATHER THAN IT'S OWN MOUNTAIN IMAGE FOR THE TIME BEING
+  private final Image Image = new Image(SpaceWars.PLAINS_IMAGE_LOCAL_URL, SpaceWars.getWidthOfTile() / 2, SpaceWars.getHeightOfTile() / 2, false, true);
+
+  @Override
+  public Image getImage() {
+    return this.Image;
+  }
+
+  @Override
   public Boolean canBeOccupiedBy(Unit unit) {
     // temp
     return false;
   }
 
-  /**
-  * calculates the defensive bonus to a given unit for this terrain, returns
-  * negative numbers for penalties and positive numbers for bonuses
-  * @param unit the unit in question
-  * @return int the amount of defensive bonus/penalty to the given unit if it
-  * occupied a tile with this terrain
-  */
+  @Override
   public int defensiveStatsFor(Unit occupant) {
     // temp
     return 0;
   }
 
-  /**
-  * returns whether the given unit can move over this terrain (not necessarily stop on it)
-  * @param unit the unit in question
-  * @return Boolean whether the given unit can traverse this terrain
-  */
+  @Override
   public Boolean canBeTraversedBy(Unit unit) {
     // temp
     return false;
   }
 
-  /**
-  * calculates the defensive bonus to a given unit for this terrain, returns
-  * negative numbers for penalties and positive numbers for bonuses
-  * @param unit the unit in question
-  * @return int the amount of movement bonus/penalty to the given unit if it
-  * occupied a tile with this terrain
-  */
+  @Override
   public int movementStatsFor(Unit unit) {
     // temp
     return 0;
