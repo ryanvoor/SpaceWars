@@ -26,13 +26,9 @@ public final class MapCreator {
     // starting cursor location
     testMap1.getTile(0, 0).giveCursor();
 
-    // AnimatedImage for the units
-    Image[] frames = new Image[]{
-      new Image(SpaceWars.PLACEHOLDER_IMAGE_LOCAL_URL_1, SpaceWars.getWidthOfTile() / 2, SpaceWars.getHeightOfTile() / 2, false, true),
-        new Image(SpaceWars.PLACEHOLDER_IMAGE_LOCAL_URL_2, SpaceWars.getWidthOfTile() / 2, SpaceWars.getHeightOfTile() / 2, false, true)};
-
     // add the units to the Map
-    testMap1.getTile(1, 1).getTile().addOccupant(new Unit(new AnimatedImage(frames, 0.5)));
+    testMap1.getTile(1, 1).getTile().addOccupant(new Unit(UnitType.SOLDIER));
+    testMap1.getTile(10, 8).getTile().addOccupant(new Unit(UnitType.DRONE));
 
     return testMap1;
   }

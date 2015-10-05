@@ -29,17 +29,20 @@ public class SpaceWars extends Application {
   private String TITLE = "Space Wars";
   private final static int WIDTH_OF_TILE = 50;
   private final static int HEIGHT_OF_TILE = 50;
+  private final static int WIDTH_OF_INFOBAR = 100;
   private int WIDTH_OF_WINDOW;
   private int HEIGHT_OF_WINDOW;
   public final static String PLACEHOLDER_IMAGE_LOCAL_URL_1 = "/images/advance_wars_mech.png";
   public final static String PLACEHOLDER_IMAGE_LOCAL_URL_2 = "/images/advance_wars_variety_of_units.jpg";
   public final static String PLACEHOLDER_IMAGE_LOCAL_URL_3 = "/images/trump_kissing.jpg";
   public final static String PLACEHOLDER_IMAGE_LOCAL_URL_4 = "/images/obama_posing.jpg";
+  public final static String PLACEHOLDER_IMAGE_LOCAL_URL_5 = "/images/spellstutter_sprite.jpg";
   public final static String PLAINS_IMAGE_LOCAL_URL = "/images/plains.jpg";
+  public final static String QUESTION_MARK_IMAGE_LOCAL_URL = "/images/question_mark.png";
   private Map currentMap;
   private Canvas canvas;
   private GraphicsContext gc;
-  private VBox infoBar;
+  private InfoBar infoBar;
 
   /**
   * Primary controller method for the application
@@ -59,8 +62,8 @@ public class SpaceWars extends Application {
     Pane container = new Pane();
 
     HBox mapAndInfoBarContainer = new HBox();
-    infoBar = new VBox();
-    infoBar.getChildren().add(new Text("EXAMPLE TEXT"));
+    infoBar = new InfoBar();
+    infoBar.setMinWidth(SpaceWars.getWidthOfInfoBar());
     mapAndInfoBarContainer.getChildren().addAll(canvas, infoBar);
     container.getChildren().add(mapAndInfoBarContainer);
     Scene scene = new Scene(container);
@@ -72,9 +75,6 @@ public class SpaceWars extends Application {
     new AnimationTimer() {
       public void handle(long currentNanoTime) {
         double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-
-        double x = 232 + 128 * Math.cos(t);
-        double y = 232 + 128 * Math.sin(t);
 
         gc.clearRect(0, 0, WIDTH_OF_WINDOW, HEIGHT_OF_WINDOW);
         writeCanvas(t);
@@ -127,6 +127,8 @@ public class SpaceWars extends Application {
     currentPixelWidth += SpaceWars.getWidthOfTile();
     currentPixelHeight = 0;
     }
+
+    infoBar.updateChildren(time);
   }
 
   /**
@@ -146,7 +148,12 @@ public class SpaceWars extends Application {
         } else if (e.getCode().equals(KeyCode.DOWN)) {
           currentMap.moveCursor(Direction.DOWN);
         } else if (e.getCode().equals(KeyCode.E)) {
-          currentMap.activateCurrentCursorTile();
+          boolean wasSelected = currentMap.activateCurrentCursorTile();
+          if (wasSelected) {
+            infoBar.setCurrentSelectedTile(null);
+          } else {
+            infoBar.setCurrentSelectedTile(currentMap.getCurrentSelectedTile().getTile());
+          }
         }
       }
     };
@@ -166,6 +173,14 @@ public class SpaceWars extends Application {
   */
   public static int getHeightOfTile() {
     return HEIGHT_OF_TILE;
+  }
+
+  /**
+  * getter for the width of the infobar
+  * @return int the width of the infobar
+  */
+  public static int getWidthOfInfoBar() {
+    return WIDTH_OF_INFOBAR;
   }
 
   /**

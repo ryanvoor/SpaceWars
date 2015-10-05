@@ -12,26 +12,38 @@ import javafx.scene.layout.VBox;
 
 public class InfoBar extends VBox {
 
-  AnimatedImage currentSelectionUnitImage;
-  Image currentSelectionTerrainImage;
-  Tile currentlySelectedTile;
+
+  private final static AnimatedImage defaultCurrentSelectionUnitImage = new AnimatedImage(new Image[]{
+    new Image(SpaceWars.QUESTION_MARK_IMAGE_LOCAL_URL, SpaceWars.getWidthOfTile(), SpaceWars.getHeightOfTile(), false, true)
+  }, 1);
+  private final static Image defaultCurrentSelectionTerrainImage =
+    new Image(SpaceWars.QUESTION_MARK_IMAGE_LOCAL_URL,
+      SpaceWars.getWidthOfTile(),
+        SpaceWars.getHeightOfTile(), false, true);
+  private AnimatedImage currentSelectionUnitImage;
+  private Image currentSelectionTerrainImage;
+  private Tile currentSelectedTile;
 
   /**
   * constructor for the InfoBar class
   * sets the children to null by default
   */
   public InfoBar() {
-    this.currentSelectionUnitImage = null;
-    this.currentSelectionTerrainImage = null;
-    this.currentlySelectedTile = null;
+    this.currentSelectionUnitImage = InfoBar.defaultCurrentSelectionUnitImage;
+    this.currentSelectionTerrainImage = InfoBar.defaultCurrentSelectionTerrainImage;
+    this.currentSelectedTile = null;
   }
 
   /**
   * updates the children in the InfoBar to their current values
+  * should get called every frame by writeCanvas
+  * @param time the current time
   */
   public void updateChildren(double time) {
     ArrayList<Node> children = new ArrayList<Node>();
-    children.add(new ImageView(this.currentSelectionUnitImage.getCurrentFrame(time)));
+    if (this.currentSelectionUnitImage != null) {
+      children.add(new ImageView(this.currentSelectionUnitImage.getCurrentFrame(time)));
+    }
     children.add((new ImageView(this.currentSelectionTerrainImage)));
     this.getChildren().setAll(children);
   }
@@ -59,16 +71,24 @@ public class InfoBar extends VBox {
   }
 
   /**
-  * @param tile the Tile to set the
+  * @param tile the Tile to set the current selected tile field to be
   * @return Tile the previous currentlySelectedTile
   */
-  public Tile setCurrentlySelectedTile(Tile tile) {
-    Tile oldCurrentlySelectedTile = this.currentlySelectedTile;
+  public Tile setCurrentSelectedTile(Tile tile) {
+    Tile oldCurrentSelectedTile = this.currentSelectedTile;
     // FOR NOW I AM IGNORING SECONDARY OCCUPANTS AND CONTESTING
-    this.setCurrentSelectionUnitImage(tile.getPrimaryOccupant().getImage());
-    this.setCurrentSelectionTerrainImage(tile.getTerrain().getImage());
-    this.currentlySelectedTile = tile;
-    return oldCurrentlySelectedTile;
+
+    if (tile == null) {
+      this.setCurrentSelectionUnitImage(InfoBar.defaultCurrentSelectionUnitImage);
+      this.setCurrentSelectionTerrainImage(InfoBar.defaultCurrentSelectionTerrainImage);
+    } else {
+      if (tile.isOccupied()) {
+        this.setCurrentSelectionUnitImage(tile.getPrimaryOccupant().getImage());
+      }
+      this.setCurrentSelectionTerrainImage(tile.getTerrain().getImage());
+    }
+    this.currentSelectedTile = tile;
+    return oldCurrentSelectedTile;
   }
 
 }

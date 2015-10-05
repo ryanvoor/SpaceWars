@@ -13,8 +13,12 @@ public class Unit {
   * constructor for this Unit class, takes in an image
   * @param image the image of this Unit
   */
-  public Unit(AnimatedImage animatedImage) {
-    this.animatedImage = animatedImage;
+  public Unit(UnitType type) {
+    if (type == UnitType.SOLDIER) {
+      this.animatedImage = UnitType.getSoldierAnimatedImage();
+    } else if (type == UnitType.DRONE) {
+      this.animatedImage = UnitType.getDroneAnimatedImage();
+    }
   }
 
   /**
