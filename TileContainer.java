@@ -10,6 +10,7 @@ public class TileContainer {
   private Tile tile;
   private boolean hasCursor;
   private boolean isSelected;
+  private boolean isWithinCurrentMoveRadius;
 
   /**
   * constructor for the TileContainer class
@@ -20,6 +21,7 @@ public class TileContainer {
     this.tile = tile;
     this.hasCursor = false;
     this.isSelected = false;
+    this.isWithinCurrentMoveRadius = false;
   }
 
   /**
@@ -110,5 +112,24 @@ public class TileContainer {
   */
   public boolean isSelected() {
     return this.isSelected;
+  }
+
+  /**
+  * returns whether this TileContainer is within the current move radius
+  * @return boolean whether this TileContainer is within the current move radius
+  */
+  public boolean isWithinCurrentMoveRadius() {
+    return isWithinCurrentMoveRadius;
+  }
+
+  /**
+  * sets the isWithinCurrentMoveRadius field for this TileContainer
+  * @param boolean whether this TileContainer is within the current move radius
+  * @return boolean whether this TileContainer was within the current move radius before
+  */
+  public boolean setIsWithinCurrentMoveRadius(boolean isWithinCurrentMoveRadius) {
+    boolean oldIsWithinCurrentMoveRadius = this.isWithinCurrentMoveRadius;
+    this.isWithinCurrentMoveRadius = isWithinCurrentMoveRadius;
+    return oldIsWithinCurrentMoveRadius;
   }
 }

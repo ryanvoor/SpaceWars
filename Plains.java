@@ -34,7 +34,7 @@ public class Plains implements Terrain {
   @Override
   public int movementStatsFor(Unit unit) {
     // temp
-    return 0;
+    return 1;
   }
 
 }

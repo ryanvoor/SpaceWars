@@ -98,8 +98,6 @@ public class SpaceWars extends Application {
         // NEW CURRENT TASK: MAKE SELECTING STUFF CHANGE THE BEHAVIOR OF THE CURSOR/DO DIFFERENT THINGS IF THEY SELECT A TILE THAT'S OCCUPIED V UNOCCUPIED ETC.
         // as a temporary measure i am going to make it so that way i cannot select a new tile when i already have a selection
 
-        // SHOULD ALTER THE GUI TO HAVE A SIDEBAR OR SOMETHING LIKE THAT TO DISPLAY INFORMATION ABOUT THE CURRENT SELECTION/GENERAL INFORMATION IF NOTHING IS SELECTED
-
         // will need to figure out what these will look like with Ryan
 
         // draw the background
@@ -119,6 +117,12 @@ public class SpaceWars extends Application {
         // draw the selection
         if (tileContainer.isSelected()) {
           gc.setFill(new Color(0, 0, 1.0, 0.5));
+          gc.fillRect(currentPixelWidth, currentPixelHeight, SpaceWars.getWidthOfTile(), SpaceWars.getHeightOfTile());
+        }
+
+        // draw the current move radius
+        if (tileContainer.isWithinCurrentMoveRadius()) {
+          gc.setFill(new Color(0, 1.0, 0, 0.5));
           gc.fillRect(currentPixelWidth, currentPixelHeight, SpaceWars.getWidthOfTile(), SpaceWars.getHeightOfTile());
         }
 

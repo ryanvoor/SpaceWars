@@ -77,36 +77,80 @@ public class Map {
     return tiles[0].length;
   }
 
+  // CURRENT ISSUE, YOU CAN MOVE THE CURSOR OUTSIDE THE MOVE RADIUS WHEN YOU HAVE A UNIT SELECTED, ALSO, THE MOVE RADIUS IS WRONG
+  // ALSO THERE IS SOMETHING WEIRD HAPPENNING WHEN I SELECT THE DRONE UNIT AS OPPOSED TO THE SOLDIER UNIT...
   /**
   * moves the cursor of this map in the specified direction
   * @param direction the direction to move the cursor
   */
   public void moveCursor(Direction direction) {
-    if (direction.equals(Direction.RIGHT)) {
-      if (currentCursorWidth != this.getWidth() - 1) {
-        this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
-        this.currentCursorWidth += 1;
-        this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+    if (!this.getCurrentCursorTile().isSelected()) {
+      if (direction.equals(Direction.RIGHT)) {
+        if (currentCursorWidth != this.getWidth() - 1) {
+          this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
+          this.currentCursorWidth += 1;
+          this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+        }
+      } else if (direction.equals(Direction.LEFT)) {
+        if (currentCursorWidth != 0) {
+          this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
+          this.currentCursorWidth -= 1;
+          this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+        }
+      } else if (direction.equals(Direction.UP)) {
+        if (currentCursorHeight != 0) {
+          this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
+          this.currentCursorHeight -= 1;
+          this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+        }
+      } else {
+        if (currentCursorHeight != this.getHeight() - 1) {
+          this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
+          this.currentCursorHeight += 1;
+          this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+        }
       }
-    } else if (direction.equals(Direction.LEFT)) {
-      if (currentCursorWidth != 0) {
-        this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
-        this.currentCursorWidth -= 1;
-        this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
-      }
-    } else if (direction.equals(Direction.UP)) {
-      if (currentCursorHeight != 0) {
-        this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
-        this.currentCursorHeight -= 1;
-        this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
-      }
-    } else {
-      if (currentCursorHeight != this.getHeight() - 1) {
-        this.getTile(currentCursorWidth, currentCursorHeight).removeCursor();
-        this.currentCursorHeight += 1;
-        this.getTile(currentCursorWidth, currentCursorHeight).giveCursor();
+    } else if (this.getCurrentCursorTile().getTile().isOccupied()) {
+      TileContainer tileToBeMovedTo;
+      if (direction.equals(Direction.RIGHT)) {
+        if (currentCursorWidth != this.getWidth() - 1) {
+          tileToBeMovedTo = this.getTile(currentCursorWidth + 1, currentCursorHeight);
+          if (tileToBeMovedTo.isWithinCurrentMoveRadius()) {
+            this.getCurrentCursorTile().removeCursor();
+            this.currentCursorWidth += 1;
+            this.getCurrentCursorTile().giveCursor();
+          }
+        }
+      } else if (direction.equals(Direction.LEFT)) {
+        if (currentCursorWidth != 0) {
+          tileToBeMovedTo = this.getTile(currentCursorWidth - 1, currentCursorHeight);
+          if (tileToBeMovedTo.isWithinCurrentMoveRadius()) {
+            this.getCurrentCursorTile().removeCursor();
+            this.currentCursorWidth -= 1;
+            this.getCurrentCursorTile().giveCursor();
+          }
+        }
+      } else if (direction.equals(Direction.UP)) {
+        if (currentCursorHeight != 0) {
+          tileToBeMovedTo = this.getTile(currentCursorWidth, currentCursorHeight - 1);
+          if (tileToBeMovedTo.isWithinCurrentMoveRadius()) {
+            this.getCurrentCursorTile().removeCursor();
+            this.currentCursorHeight -= 1;
+            this.getCurrentCursorTile().giveCursor();
+          }
+        }
+      } else {
+        if (currentCursorHeight != this.getHeight() - 1) {
+          tileToBeMovedTo = this.getTile(currentCursorWidth, currentCursorHeight + 1);
+          if (tileToBeMovedTo.isWithinCurrentMoveRadius()) {
+            this.getCurrentCursorTile().removeCursor();
+            this.currentCursorHeight += 1;
+            this.getCurrentCursorTile().giveCursor();
+          }
+        }
       }
     }
+
   }
 
   /**
@@ -126,6 +170,13 @@ public class Map {
     this.getCurrentCursorTile().select();
     this.currentSelectionWidth = this.currentCursorWidth;
     this.currentSelectionHeight = this.currentCursorHeight;
+    if (this.getCurrentCursorTile().getTile().isOccupied()) {
+      try {
+       this.calculateCurrentMoveRadius();
+      } catch (NoCurrentSelectionException e) {
+        System.out.println(e);
+      }
+    }
     return currentCursorWasSelected;
   }
 
@@ -135,6 +186,9 @@ public class Map {
   */
   private boolean deselectCurrentCursorTile() {
     boolean currentCursorWasSelected = this.getCurrentCursorTile().isSelected();
+    if (this.getCurrentCursorTile().getTile().isOccupied()) {
+      this.clearCurrentMoveRadius();
+    }
     this.getCurrentCursorTile().deselect();
     this.currentSelectionWidth = null;
     this.currentSelectionHeight = null;
@@ -173,5 +227,48 @@ public class Map {
     } else {
       return null;
     }
+  }
+
+  /**
+  * calculates the current move radius based on the currently selected tile,
+  * the unit occupying that tile, and the surrounding terrain
+  */
+  private void calculateCurrentMoveRadius() throws NoCurrentSelectionException{
+    // FOR NOW THIS IS NOT TAKING TERRAIN INTO ACCOUNT
+    // ALSO IGNORING SECONDARY OCCUPANTS
+    if (!this.hasASelection()) {
+      throw new NoCurrentSelectionException("calculateCurrentMoveRadius() was called when the Map did not have a current selection");
+    }
+    int moveDistance = this.getCurrentSelectedTile().getTile().getPrimaryOccupant().getMoveDistance();
+    for (int i = 0; i < this.getWidth(); i++) {
+      for (int j = 0; j < this.getHeight(); j++) {
+        if (this.calculateDistanceBetween(i, j, this.currentSelectionWidth, this.currentSelectionHeight) <= moveDistance) {
+          this.getTile(i, j).setIsWithinCurrentMoveRadius(true);
+        }
+      }
+    }
+  }
+
+  /**
+  * clears the current move radius
+  */
+  private void clearCurrentMoveRadius() {
+    for (int i = 0; i < this.getWidth(); i++) {
+      for (int j = 0; j < this.getHeight(); j++) {
+        this.getTile(i, j).setIsWithinCurrentMoveRadius(false);
+      }
+    }
+  }
+
+  /**
+  * calculates the distance between two tiles given those two tiles' x and y positions in the Map
+  * @param firstX the first tile's X position
+  * @param firstY the first Tile's Y position
+  * @param secondX the second tile's X position
+  * @param secondY the second tile's Y position
+  * @return int the distance between the two Tiles in this Map
+  */
+  private int calculateDistanceBetween(int firstX, int firstY, int secondX, int secondY) {
+    return Math.abs(firstX - secondX) + Math.abs(firstY - secondY);
   }
 }

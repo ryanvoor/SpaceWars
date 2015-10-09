@@ -6,6 +6,10 @@
 */
 public class NoOccupantException extends Exception {
 
+  /**
+  * constructor for the NoOccupantException class
+  * @param message the error message
+  */
   public NoOccupantException(String message) {
     super(message);
   }
