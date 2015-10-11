@@ -77,8 +77,7 @@ public class Map {
     return tiles[0].length;
   }
 
-  // CURRENT ISSUE, YOU CAN MOVE THE CURSOR OUTSIDE THE MOVE RADIUS WHEN YOU HAVE A UNIT SELECTED, ALSO, THE MOVE RADIUS IS WRONG
-  // ALSO THERE IS SOMETHING WEIRD HAPPENNING WHEN I SELECT THE DRONE UNIT AS OPPOSED TO THE SOLDIER UNIT...
+  // CURRENT ISSUE, YOU CAN MOVE THE CURSOR OUTSIDE THE MOVE RADIUS WHEN YOU HAVE A UNIT SELECTED
   /**
   * moves the cursor of this map in the specified direction
   * @param direction the direction to move the cursor
@@ -270,5 +269,13 @@ public class Map {
   */
   private int calculateDistanceBetween(int firstX, int firstY, int secondX, int secondY) {
     return Math.abs(firstX - secondX) + Math.abs(firstY - secondY);
+  }
+
+  /**
+  * gets an array of the neighboring tiles of the given x and y coordinates in this Map
+  * @return TileContainer[] an array of the neighboring tiles of the parameter location
+  */
+  public TileContainer[] getNeighboringTiles(int x, int y) {
+    return new TileContainer[]{this.getTile(x + 1, y), this.getTile(x - 1, y), this.getTile(x, y + 1), this.getTile(x,  y - 1)};
   }
 }
